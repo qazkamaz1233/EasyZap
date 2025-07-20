@@ -1,0 +1,23 @@
+# Visual Studio и ASP.NET Core
+bin/
+obj/
+*.csproj.user
+*.suo
+*.user
+.vs/
+*.db
+*.db-shm
+*.db-wal
+appsettings.Development.json
+
+# Временные файлы и логи
+*.log
+*.tmp
+*.bak
+*.cache
+
+# Папка для публикации
+publish/
+
+# SQLite база данных
+easyzap.db

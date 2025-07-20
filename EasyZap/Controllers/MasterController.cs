@@ -24,6 +24,11 @@ namespace EasyZap.Controllers
         [Route("Master/Register")]
         public IActionResult Register(Master master)
         {
+            if(_context.Masters.Any(m => m.Email == master.Email))
+            {
+                ModelState.AddModelError("Email", "Этот Email уже зарегистрирован");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Masters.Add(master);
@@ -31,6 +36,29 @@ namespace EasyZap.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            return View(master);
+        }
+
+        [HttpGet]
+        [Route("Master/Login")]
+        public IActionResult Login()
+        {
+            return View("Login");
+        }
+
+        [HttpPost]
+        [Route("Master/Login")]
+        public IActionResult Login(Master master)
+        {
+            var existingMaster = _context.Masters.FirstOrDefault(m => m.Email == master.Email
+            && m.PasswordHash == master.PasswordHash);
+
+            if (existingMaster != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.Error = "Неверный email или пароль";
             return View(master);
         }
 

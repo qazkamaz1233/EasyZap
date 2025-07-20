@@ -1,0 +1,21 @@
+﻿@model EasyZap.Models.Master
+<div class="container mt-5">
+    <h2>Вход для мастера</h2>
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+    }
+    <form asp-controller="Master" asp-action="Login" method="post">
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" asp-for="Email" class="form-control" required />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Пароль</label>
+            <input type="password" asp-for="PasswordHash" class="form-control" required />
+            <span asp-validation-for="PasswordHash" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Войти</button>
+    </form>
+</div>

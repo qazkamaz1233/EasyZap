@@ -63,6 +63,53 @@ namespace EasyZap.Controllers
         }
 
         [HttpGet]
+        [Route("Master/CreateAppointment")]
+        public IActionResult CreateAppointment()
+        {
+            ViewBag.Masters = _context.Masters.Select(m => new { m.Id, m.Name }).ToList();
+            return View();
+        }
+
+        [HttpPost]
+        [Route("Master/CreateAppointment")]
+        public IActionResult CreateAppointment(Appointment appointment)
+        {
+            // Удаляем ошибки, связанные с Master
+            if (ModelState.ContainsKey("Master"))
+            {
+                ModelState.Remove("Master");
+            }
+
+            ViewBag.DebugMasterId = appointment.MasterId; // Для отладки
+            ViewBag.DebugModelState = string.Join("; ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+
+            if (appointment.DateTime < DateTime.Now)
+            {
+                ModelState.AddModelError("DateTime", "Дата и время записи не могут быть в прошлом");
+            }
+            if (!_context.Masters.Any(m => m.Id == appointment.MasterId))
+            {
+                ModelState.AddModelError("MasterId", "Мастер с таким ID не существует");
+            }
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+                ViewBag.ValidationErrors = string.Join("; ", errors);
+            }
+
+            if (ModelState.IsValid)
+            {
+                _context.Appointments.Add(appointment);
+                _context.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.Masters = _context.Masters.Select(m => new { m.Id, m.Name }).ToList();
+
+            return View(appointment);
+        }
+
+        [HttpGet]
         public IActionResult TestRegister()
         {
             var master = new Master

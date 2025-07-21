@@ -1,4 +1,8 @@
-﻿@model EasyZap.Models.Master
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model EasyZap.Models.Master
 <div class="container mt-5">
     <h2>Регистрация мастера</h2>
     <form asp-controller="Master" asp-action="Register" method="post">

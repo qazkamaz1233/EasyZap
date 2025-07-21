@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EasyZap.Models
 {
@@ -6,18 +7,20 @@ namespace EasyZap.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        public int MasterId { get; set; }
-
+        [NotMapped]
         public Master Master { get; set; }
 
         [Required]
+        public int MasterId { get; set; }
+
+
+        [Required(ErrorMessage = "Имя клиента обязателено")]
         public string ClientName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Время записи обязательно")]
         public DateTime DateTime { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Укажите предоставляемую услугу")]
         public string Service {  get; set; }
     }
 }

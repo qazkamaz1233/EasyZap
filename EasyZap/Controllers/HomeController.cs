@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using EasyZap.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace EasyZap.Controllers
 {
@@ -15,6 +16,11 @@ namespace EasyZap.Controllers
 
         public IActionResult Index()
         {
+            //if(HttpContext.Session?.GetInt32("MasterId") != null)
+            //{
+            //    return RedirectToAction("Dashboard", "Master");
+            //}
+
             return View();
         }
 

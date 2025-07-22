@@ -1,8 +1,44 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container-fluid p-0">
+    <div class="hero-section" style="background-image: linear-gradient(to bottom, #0D47A1, #263238); height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; color: white;">
+        <div>
+            <h1 class="fs-1" style="font-family: 'Montserrat', sans-serif; font-weight: 700;">EasyZap — запись за минуту!</h1>
+            <p class="fs-3" style="font-family: 'Roboto', sans-serif;">Ваш стиль, ваш выбор, ваш сервис.</p>
+        </div>
+    </div>
+    <div class="container-fluid w-100 py-5" style="background-color: #6A1B9A; color: white;">
+        <div class="container">
+            <h3 class="fs-2 text-center mb-4" style="font-family: 'Montserrat', sans-serif;">Почему EasyZap?</h3>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-12 text-center mb-4">
+                    <h5 style="font-family: 'Montserrat', sans-serif;">Скорость</h5>
+                    <p style="font-family: 'Roboto', sans-serif;">Записывайся за минуту.</p>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12 text-center mb-4">
+                    <h5 style="font-family: 'Montserrat', sans-serif;">Удобство</h5>
+                    <p style="font-family: 'Roboto', sans-serif;">Выбирай мастера и время онлайн.</p>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12 text-center mb-4">
+                    <h5 style="font-family: 'Montserrat', sans-serif;">Разнообразие</h5>
+                    <p style="font-family: 'Roboto', sans-serif;">Для всех — стрижки, маникюр и не только.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container text-center py-5">
+        <h4 style="font-family: 'Montserrat', sans-serif;">Свяжитесь с нами</h4>
+        <p style="font-family: 'Roboto', sans-serif;">Email: <a href="mailto:contact@easyzap.com" style="color: #FFB300;">contact@easyzap.com</a></p>
+    </div>
 </div>
+<style>
+    .btn:hover {
+        transform: scale(1.05);
+        transition: transform 0.2s;
+    }
+
+    .hero-section {
+        background-attachment: fixed;
+    }
+</style>

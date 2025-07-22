@@ -74,7 +74,7 @@ namespace EasyZap.Controllers
         [Route("Master/CreateAppointment")]
         public IActionResult CreateAppointment(Appointment appointment)
         {
-            // Удаляем ошибки, связанные с Master
+            // Удаляем ошибки, связанные с Master  (FIX ME)
             if (ModelState.ContainsKey("Master"))
             {
                 ModelState.Remove("Master");

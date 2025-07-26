@@ -16,12 +16,10 @@ namespace EasyZap.Controllers
 
         public IActionResult Index()
         {
-            //if(HttpContext.Session?.GetInt32("MasterId") != null)
-            //{
-            //    return RedirectToAction("Dashboard", "Master");
-            //}
-
-            return View();
+            return PhysicalFile(
+                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "tilda", "index.html"),
+                "text/html"
+            );
         }
 
         public IActionResult Privacy()

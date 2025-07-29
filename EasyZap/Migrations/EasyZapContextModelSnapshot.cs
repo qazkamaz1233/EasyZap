@@ -17,36 +17,14 @@ namespace EasyZap.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.7");
 
-            modelBuilder.Entity("EasyZap.Models.Appointment", b =>
+            modelBuilder.Entity("EasyZap.Models.ApplicationUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ClientName")
-                        .IsRequired()
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("MasterId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Service")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Appointments");
-                });
-
-            modelBuilder.Entity("EasyZap.Models.Master", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -60,17 +38,12 @@ namespace EasyZap.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Schedule")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Service")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Role")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Masters");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

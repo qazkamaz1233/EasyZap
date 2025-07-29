@@ -6,7 +6,7 @@ namespace EasyZap.Data
     // для миграций
     public class EasyZapContext : DbContext
     {
-
+        public DbSet<ApplicationUser> Users { get; set; }
         public EasyZapContext(DbContextOptions<EasyZapContext> options) : base(options)
         {
 

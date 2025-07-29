@@ -1,4 +1,4 @@
-﻿@model EasyZap.Models.RegisterViewModel
+﻿@model EasyZap.ViewModels.RegisterViewModel
 @{
     ViewData["Title"] = "Регистрация";
 }
@@ -80,6 +80,11 @@
         background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.7));
         z-index: -1;
     }
+
+    input[type="radio"] {
+        accent-color: black;
+    }
+
 </style>
 
 <div class="register-container">
@@ -104,6 +109,19 @@
             <label asp-for="Password" class="form-label">Пароль</label>
             <input asp-for="Password" type="password" class="form-control" />
             <span asp-validation-for="Password" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <div style="display: flex; gap: 20px; align-items: center;">
+                <div>
+                    <input type="radio" id="client" name="UserType" value="Client" checked />
+                    <label for="client">Я клиент</label>
+                </div>
+                <div>
+                    <input type="radio" id="master" name="UserType" value="Master"/>
+                    <label for="client">Я мастер</label>
+                </div>
+            </div>
         </div>
 
         <button type="submit" class="register-btn">Зарегистрироваться</button>

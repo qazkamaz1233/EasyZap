@@ -3,6 +3,12 @@ using EasyZap.Models;
 using EasyZap.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace EasyZap.Controllers
 {
@@ -44,9 +50,46 @@ namespace EasyZap.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private string HashPassword(string password)
+        [HttpGet]
+        public IActionResult Login()
         {
-            return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(password));
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+
+            if(user == null)
+            {
+                ModelState.AddModelError("", "Пользователь не найден");
+                return View(model);
+            }
+
+            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
+            if(result != PasswordVerificationResult.Success)
+            {
+                ModelState.AddModelError("", "Неверный пароль");
+                return View(model);
+            }
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Role, user.Role.ToString())
+            };
+
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme); // создает информацию о пользователе, кто он и т.д.
+            var principial = new ClaimsPrincipal(identity); // оборачивает identity, то что прикрепляется к пользователю
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principial); // для распознования пользователя по куке
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

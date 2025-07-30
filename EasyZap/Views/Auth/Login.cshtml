@@ -1,0 +1,110 @@
+﻿@model EasyZap.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+<style>
+    body {
+        background: url('/tilda/images/background.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: black;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    .login-container {
+        max-width: 420px;
+        margin: 80px auto;
+        padding: 40px 30px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .brand-title {
+        font-size: 32px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .form-label {
+        font-weight: 500;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .mb-3 {
+        vertical-align: middle;
+        margin-bottom: 16px;
+    }
+
+    .login-btn {
+        display: block; /* чтобы можно было центрировать */
+        margin: 30px auto 0 auto; /* отступ сверху и центрирование */
+        padding: 15px 40px; /* увеличим высоту и ширину */
+        background-color: black; /* чёрный фон */
+        color: white; /* белый текст */
+        font-size: 16px; /* размер шрифта */
+        border: none; /* уберём обводку */
+        border-radius: 8px; /* скругления */
+        cursor: pointer; /* курсор при наведении */
+        transition: background-color 0.3s ease;
+    }
+
+        .login-btn:hover {
+            background-color: #333; /* при наведении — темнее */
+        }
+
+    input.form-control {
+        height: 50px;
+        font-size: 16px;
+        border-radius: 8px;
+        padding: 10px 15px;
+        box-sizing: border-box;
+    }
+
+    h4.text-center {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    body::before { /*фиксит затемнение фона изображения*/
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.7));
+        z-index: -1;
+    }
+
+    input[type="radio"] {
+        accent-color: black;
+    }
+
+</style>
+
+<div class="login-container">
+    <div class="brand-title">EasyZap</div>
+
+    <h4 class="text-center mb-4">Авторизация</h4>
+
+    <form asp-action="Login" method="post">
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label">Пароль</label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger small"></span>
+        </div>
+
+        <button type="submit" class="login-btn">Вход</button>
+    </form>
+</div>

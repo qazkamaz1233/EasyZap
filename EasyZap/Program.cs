@@ -1,5 +1,6 @@
 using EasyZap.Data;
 using EasyZap.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,9 +8,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<EasyZapContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddDbContext<EasyZapContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddScoped<IPasswordHasher<ApplicationUser>, PasswordHasher<ApplicationUser>>();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(option =>
+    {
+        option.LoginPath = "/Auth/Login";
+    });
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -22,6 +32,7 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles(); // <- важно для CSS/JS
 app.UseRouting();
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",

@@ -32,7 +32,7 @@ namespace EasyZap.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(model);
 
             var user = new ApplicationUser
@@ -64,14 +64,14 @@ namespace EasyZap.Controllers
 
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
 
-            if(user == null)
+            if (user == null)
             {
                 ModelState.AddModelError("", "Пользователь не найден");
                 return View(model);
             }
 
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
-            if(result != PasswordVerificationResult.Success)
+            if (result != PasswordVerificationResult.Success)
             {
                 ModelState.AddModelError("", "Неверный пароль");
                 return View(model);
@@ -92,9 +92,17 @@ namespace EasyZap.Controllers
             if (user.Role == UserRole.Master)
                 return RedirectToAction("Dashboard", "Master");
 
-            else if(user.Role == UserRole.Client)
+            else if (user.Role == UserRole.Client)
                 return RedirectToAction("Dashboard", "Client");
 
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
     }

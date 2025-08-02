@@ -16,7 +16,13 @@
 </head>
 <body>
 
-    <!-- Хедер/меню, если нужно -->
+    @if (User.Identity?.IsAuthenticated ?? false)
+    {
+        <form asp-action="Logout" asp-controller="Auth" method="post" style="display:inline;">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-link" style="color:white;">Выйти</button>
+        </form>
+    }
 
     <main>
         @RenderBody()

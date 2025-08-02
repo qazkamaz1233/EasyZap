@@ -18,15 +18,32 @@ namespace EasyZap.Controllers
             return View();
         }
 
+        [AcceptVerbs("GET", "POST")]
+        public async Task<IActionResult> IsEmailAvailable(string email)
+        {
+            if (await _userService.IsEmailTakenAsync(email))
+            {
+                return Json($"Пользователь с таким Email уже существует");
+            }
+
+            return Json(true);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
+            
+            if(string.IsNullOrEmpty(model.Name))
+            {
+                ModelState.AddModelError("Name", "Введите имя");
+                return View(model);
+            }
 
             if(await _userService.IsEmailTakenAsync(model.Email))
             {
-                ModelState.AddModelError("", "Пользователь с таким Email уже существует");
+                ModelState.AddModelError("Email", "Пользователь с таким Email уже существует");
                 return View(model);
             }
 

@@ -85,7 +85,67 @@
         accent-color: black;
     }
 
+    .email-error {
+        display: inline-block;
+        border: 1px solid #dc3545;
+        padding: 5px 10px;
+        border-radius: 4px;
+        margin-top: 5px;
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .email-error:empty {
+        display: none;
+    }
+
+    .name-error{
+        display: inline-block;
+        border: 1px solid #dc3545;
+        padding: 5px 10px;
+        border-radius: 4px;
+        margin-top: 5px;
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .name-error:empty {
+        display: none;
+    }
+
 </style>
+
+<script>
+    window.addEventListener("DOMContentLoaded", function () {
+        const showAndAutoHideError = (selector) => {
+            const error = document.querySelector(selector);
+            
+            if (!error) return;
+
+            const text = error.innerText.trim();
+
+            if (text === "") {
+                error.style.display = "none";
+                return;
+            }
+
+            error.style.display = "inline-block";
+
+            setTimeout(() => {
+                error.style.transition = "opacity 0.5s";
+                error.style.opacity = 0;
+
+                setTimeout(() => {
+                    error.style.display = "none";
+                    error.style.opacity = 1; // чтобы не осталась прозрачной навсегда
+                }, 500);
+            }, 3000);
+        };
+
+        showAndAutoHideError(".email-error");
+        showAndAutoHideError(".name-error");
+    });
+</script>
 
 <div class="register-container">
     <div class="brand-title">EasyZap</div>
@@ -95,14 +155,14 @@
     <form asp-action="Register" method="post">
         <div class="mb-3">
             <label asp-for="Name" class="form-label">Имя</label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger small"></span>
+            <input asp-for="Name" class="form-control"/>
+            <span asp-validation-for="Name" class="text-danger small name-error"></span>
         </div>
 
         <div class="mb-3">
-            <label asp-for="Email" class="form-label">Email</label>
+            <label asp-for="Email" class="form-label"></label>
             <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger small"></span>
+            <span asp-validation-for="Email" class="text-danger small email-error"></span>
         </div>
 
         <div class="mb-3">

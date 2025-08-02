@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -10,11 +12,15 @@
     <link rel="stylesheet" href="/tilda/css/tilda-cover-1.0.min.css" />
     <link rel="stylesheet" href="/tilda/css/tilda-cards-1.0.min.css" />
     <link rel="stylesheet" href="/tilda/css/fonts-tildasans.css" />
-
-    <!-- Добавь свой CSS, если есть -->
     <link rel="stylesheet" href="/css/site.css" />
 </head>
 <body>
+    @if (User.Identity?.IsAuthenticated ?? false)
+    {
+        <div style="color: white; margin-right: 15px;">
+            Здравствуйте, @User.Identity.Name (@User.FindFirst(ClaimTypes.Role)?.Value)
+        </div>
+    }
 
     @if (User.Identity?.IsAuthenticated ?? false)
     {

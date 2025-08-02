@@ -1,28 +1,22 @@
 ﻿using System.Security.Claims;
-using EasyZap.Data;
+using EasyZap.Service;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyZap.Controllers
 {
     [Authorize(Roles = "Client")]
-    public class ClientController : Controller
+    public class ClientController : BaseController
     {
-        private readonly EasyZapContext _context;
-
-        public ClientController(EasyZapContext context)
-        {
-            _context = context;
-        }
+        public ClientController(UserService userService) : base(userService) { }
 
         [HttpGet]
-        public IActionResult Dashboard()
+        public async Task<IActionResult> Dashboard()
         {
             var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (int.TryParse(userIdClaim, out var useId))
             {
-                var user = _context.Users.FirstOrDefault(x => x.Id == useId);
+                var user = await _userService.GetByIdAsync(useId);
                 return View(user);
             }
 

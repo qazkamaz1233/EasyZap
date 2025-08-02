@@ -1,27 +1,16 @@
-﻿using EasyZap.Data;
-using EasyZap.Models;
+﻿using EasyZap.Models;
 using EasyZap.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.Text;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using EasyZap.Service;
 
 namespace EasyZap.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController : BaseController
     {
-        private readonly EasyZapContext _context;
-        private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
-
-        public AuthController(EasyZapContext context, IPasswordHasher<ApplicationUser> passwordHasher)
-        {
-            _context = context;
-            _passwordHasher = passwordHasher;
-        }
+        public AuthController(UserService userService) : base(userService) { }
 
         [HttpGet]
         public IActionResult Register()
@@ -35,6 +24,12 @@ namespace EasyZap.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
+            if(await _userService.IsEmailTakenAsync(model.Email))
+            {
+                ModelState.AddModelError("", "Пользователь с таким Email уже существует");
+                return View(model);
+            }
+
             var user = new ApplicationUser
             {
                 Name = model.Name,
@@ -42,10 +37,9 @@ namespace EasyZap.Controllers
                 Role = model.Role
             };
 
-            user.PasswordHash = _passwordHasher.HashPassword(user, model.Password);
+            user.PasswordHash = _userService.HashPassword(user, model.Password);
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            await _userService.SaveUserAsync(user);
 
             return RedirectToAction("Index", "Home");
         }
@@ -61,8 +55,8 @@ namespace EasyZap.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
-
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+            
+            var user = await _userService.GetByEmailAsync(model.Email); 
 
             if (user == null)
             {
@@ -70,32 +64,16 @@ namespace EasyZap.Controllers
                 return View(model);
             }
 
-            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
+            var result = _userService.VerifyPassword(user, model.Password);
             if (result != PasswordVerificationResult.Success)
             {
                 ModelState.AddModelError("", "Неверный пароль");
                 return View(model);
             }
 
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
-            };
+            await _userService.SignInAsync(user, HttpContext);
 
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme); // создает информацию о пользователе, кто он и т.д.
-            var principial = new ClaimsPrincipal(identity); // оборачивает identity, то что прикрепляется к пользователю
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principial); // для распознования пользователя по куке
-
-            if (user.Role == UserRole.Master)
-                return RedirectToAction("Dashboard", "Master");
-
-            else if (user.Role == UserRole.Client)
-                return RedirectToAction("Dashboard", "Client");
-
-            return RedirectToAction("Index", "Home");
+            return RedirectByRole(user.Role);
         }
 
         [HttpPost]
@@ -104,6 +82,16 @@ namespace EasyZap.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
+        }
+
+        private IActionResult RedirectByRole(UserRole role)
+        {
+            return role switch
+            {
+                UserRole.Master => RedirectToAction("Dashboard", "Master"),
+                UserRole.Client => RedirectToAction("Dashboard", "Client"),
+                _ => RedirectToAction("Index", "Home")
+            };
         }
     }
 }

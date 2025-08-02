@@ -1,0 +1,13 @@
+﻿@using System.Security.Claims
+@model ApplicationUser
+
+<div class="dashboard-container">
+    <h2>Личный кабинет мастера</h2>
+    <p><strong>Имя:</strong> @Model.Name</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Дата регистрации:</strong> @Model.CreatedAt.ToLocalTime().ToString("g")</p>
+
+    <p>@User.Identity.Name</p>
+    <p>@User.FindFirst(ClaimTypes.Role)?.Value</p>
+
+</div>

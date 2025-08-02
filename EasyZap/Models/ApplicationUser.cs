@@ -4,8 +4,8 @@ namespace EasyZap.Models
 {
     public enum UserRole
     {
-        Client,
-        Master
+        Client = 0,
+        Master = 1
     }
 
     public class ApplicationUser

@@ -114,12 +114,12 @@
         <div class="mb-3">
             <div style="display: flex; gap: 20px; align-items: center;">
                 <div>
-                    <input type="radio" id="client" name="UserType" value="Client" checked />
+                    <input type="radio" asp-for="Role" id="client" value="Client" checked />
                     <label for="client">Я клиент</label>
                 </div>
                 <div>
-                    <input type="radio" id="master" name="UserType" value="Master"/>
-                    <label for="client">Я мастер</label>
+                    <input type="radio" asp-for="Role" id="master" value="Master" />
+                    <label for="master">Я мастер</label>
                 </div>
             </div>
         </div>

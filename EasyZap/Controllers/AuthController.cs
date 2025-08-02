@@ -89,6 +89,12 @@ namespace EasyZap.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principial); // для распознования пользователя по куке
 
+            if (user.Role == UserRole.Master)
+                return RedirectToAction("Dashboard", "Master");
+
+            else if(user.Role == UserRole.Client)
+                return RedirectToAction("Dashboard", "Client");
+
             return RedirectToAction("Index", "Home");
         }
     }

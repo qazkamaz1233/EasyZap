@@ -31,8 +31,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseStaticFiles(); // <- важно для CSS/JS
 app.UseRouting();
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

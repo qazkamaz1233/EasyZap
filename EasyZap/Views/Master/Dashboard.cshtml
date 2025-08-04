@@ -1,13 +1,59 @@
-﻿@using System.Security.Claims
-@model ApplicationUser
+﻿<link rel="stylesheet" href="~/css/master-dashboard.css"/>
 
-<div class="dashboard-container">
-    <h2>Личный кабинет мастера</h2>
-    <p><strong>Имя:</strong> @Model.Name</p>
-    <p><strong>Email:</strong> @Model.Email</p>
-    <p><strong>Дата регистрации:</strong> @Model.CreatedAt.ToLocalTime().ToString("g")</p>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет мастера</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
 
-    <p>@User.Identity.Name</p>
-    <p>@User.FindFirst(ClaimTypes.Role)?.Value</p>
+    <div class="container">
+        <div class="profile">
+            <img src="https://via.placeholder.com/120" alt="Фото мастера">
+            <div class="profile-info">
+                <h2>Иван Иванов</h2>
+                <p>Барбер, 5 лет опыта</p>
+                <p>Специализация: мужские стрижки, бритьё</p>
 
-</div>
+                <div class="actions">
+                    <button>Редактировать профиль</button>
+                    <button>Сменить пароль</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Расписание</h3>
+            <div class="schedule">
+                <div class="card">
+                    <p><strong>Понедельник</strong></p>
+                    <p>10:00 – 18:00</p>
+                </div>
+                <div class="card">
+                    <p><strong>Среда</strong></p>
+                    <p>12:00 – 20:00</p>
+                </div>
+                <!-- Добавь больше дней по аналогии -->
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Ближайшие записи</h3>
+            <div class="appointments">
+                <div class="card">
+                    <p><strong>Алексей Петров</strong></p>
+                    <p>Запись: 5 авг, 14:00</p>
+                </div>
+                <div class="card">
+                    <p><strong>Мария Смирнова</strong></p>
+                    <p>Запись: 6 авг, 11:30</p>
+                </div>
+                <!-- Ещё записи -->
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

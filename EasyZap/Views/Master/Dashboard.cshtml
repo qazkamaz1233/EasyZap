@@ -22,38 +22,39 @@
     .actions {
         display: flex;
         justify-content: space-between;
-        gap: 10px;
+        align-items: center;
         flex-wrap: wrap;
     }
 
-    .edit-buttons{
+    .edit-buttons {
         display: flex;
         gap: 10px;
     }
 
-    .actions button {
+    .edit-buttons button {
+        background-color: black;
+        color: white;
         padding: 10px 15px;
         border: none;
         border-radius: 5px;
-        cursor: pointer;
         font-size: 14px;
         font-weight: bold;
-        background-color: #000;
-        color: #fff;
+        cursor: pointer;
         transition: background-color 0.3s ease;
     }
 
-    .actions button:hover {
+    .edit-buttons button:hover {
         background-color: #333;
     }
 
-    /* Кнопка выхода */
+    .actions .logout-btn{
+        background-color: #dc3545;
+    }
     .logout-btn {
-        margin-left: auto; /* прижимает к правому краю */
-        background-color: #dc3545 !important;
+        background-color: #dc3545;
         color: white;
-        border: none;
         padding: 10px 15px;
+        border: none;
         border-radius: 5px;
         font-size: 14px;
         font-weight: bold;
@@ -62,7 +63,7 @@
     }
 
     .logout-btn:hover {
-        background-color: #b02a37 !important;
+        background-color: #b02a37;
     }
 </style>
 
@@ -86,11 +87,10 @@
                 <div class="actions">
                     <div class="edit-buttons">
                         <button>Редактировать профиль</button>
-                        <button>Редактировать расписание</button>
+                        <button>Расписание</button>
                         <button>Создать ссылку</button>
                     </div>
-                   
-                    
+
                     @if (User.Identity?.IsAuthenticated ?? false)
                     {
                         <form asp-action="Logout" asp-controller="Auth" method="post" style="display:inline;">

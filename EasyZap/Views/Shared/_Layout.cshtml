@@ -15,20 +15,7 @@
     <link rel="stylesheet" href="/css/site.css" />
 </head>
 <body>
-    @if (User.Identity?.IsAuthenticated ?? false)
-    {
-        <div style="color: white; margin-right: 15px;">
-            Здравствуйте, @User.Identity.Name (@User.FindFirst(ClaimTypes.Role)?.Value)
-        </div>
-    }
-
-    @if (User.Identity?.IsAuthenticated ?? false)
-    {
-        <form asp-action="Logout" asp-controller="Auth" method="post" style="display:inline;">
-            @Html.AntiForgeryToken()
-            <button type="submit" class="btn btn-link" style="color:white;">Выйти</button>
-        </form>
-    }
+    
 
     <main>
         @RenderBody()

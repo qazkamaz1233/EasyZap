@@ -1,123 +1,5 @@
 ﻿<link rel="stylesheet" href="~/css/master-dashboard.css"/>
 
-<style>
-    body {
-        background: url('/tilda/images/background.jpg') no-repeat center center fixed;
-        background-size: cover;
-        color: black;
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-
-    body::before { /*фиксит затемнение фона изображения*/
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.7));
-        z-index: -1;
-    }
-
-    .schedule, .appointments {
-        border-top: 2px solid black !important; /* черная линия сверху блока */
-        padding-top: 10px; /* отступ между линией и содержимым */
-        margin-bottom: 20px; /* отступ под блоком */
-    }
-
-    .actions {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    .edit-buttons {
-        display: flex;
-        gap: 10px;
-    }
-
-    .edit-buttons button {
-        background-color: black;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        font-size: 14px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .edit-buttons button:hover {
-        background-color: #333;
-    }
-
-    .actions .logout-btn{
-        background-color: #dc3545;
-    }
-
-    .logout-btn {
-        background-color: #dc3545;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        font-size: 14px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .logout-btn:hover {
-        background-color: #b02a37;
-    }
-
-    .container {
-        max-width: 1200px;
-        margin: 40px auto; /* сверху и снизу 40px, по бокам auto — центрирование */
-        padding: 20px;
-        background: rgba(255,255,255,0.9); /* чтобы текст читался */
-        border-radius: 10px;
-    }
-
-    /* Адаптив */
-    /* Мобильная версия */
-    @@media (max-width: 768px) {
-
-        .profile {
-            position: relative;
-        }
-
-        .logout-btn {
-            position: absolute;
-            top: 0;
-            right: 0;
-            margin: 0;
-            padding: 8px 12px;
-            font-size: 12px;
-        }
-
-        .actions {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-    }
-
-    .section h3 {
-        border: none !important;
-        border-bottom: 2px solid black !important; /* линия под заголовком */
-        padding-bottom: 10px; /* отступ текста от линии */
-        margin-bottom: 15px; /* отступ линии от следующего блока */
-        color: black; /* цвет заголовка */
-    }
-
-    .section * {
-        border: none !important;
-    }
-
-</style>
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -139,6 +21,7 @@
                     <div class="edit-buttons">
                         <button>Редактировать профиль</button>
                         <button>Расписание</button>
+                        <button>Записать</button>
                         <button>Создать ссылку</button>
                     </div>
 

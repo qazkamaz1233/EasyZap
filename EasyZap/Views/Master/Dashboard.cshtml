@@ -20,7 +20,6 @@
                 <div class="actions">
                     <div class="edit-buttons">
                         <button>Редактировать профиль</button>
-                        <button>Расписание</button>
                         <button>Записать</button>
                         <button>Создать ссылку</button>
                     </div>
@@ -38,17 +37,16 @@
         </div>
 
         <div class="section">
-            <h3>Расписание</h3>
+            <h3>Моё расписание</h3>
             <div class="schedule">
-                <div class="card">
-                    <p><strong>Понедельник</strong></p>
-                    <p>10:00 – 18:00</p>
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <button id="prevMonth">⟵</button>
+                        <span id="monthName"></span>
+                        <button id="nextMonth">⟶</button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid"></div>
                 </div>
-                <div class="card">
-                    <p><strong>Среда</strong></p>
-                    <p>12:00 – 20:00</p>
-                </div>
-                <!-- Добавь больше дней по аналогии -->
             </div>
         </div>
 
@@ -67,6 +65,79 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const monthNames = [
+            "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
+            "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+        ];
+
+        let currentDate = new Date();
+
+        function renderCalendar(date) {
+            const month = date.getMonth();
+            const year = date.getFullYear();
+
+            document.getElementById("monthName").textContent =
+                `${monthNames[month]} ${year}`;
+
+            const firstDayOfMonth = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            const calendarGrid = document.getElementById("calendarGrid");
+            calendarGrid.innerHTML = "";
+
+            // Добавляем дни недели
+            const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+            weekDays.forEach(day => {
+                const weekDayCell = document.createElement("div");
+                weekDayCell.classList.add("day-name");
+                weekDayCell.textContent = day;
+                calendarGrid.appendChild(weekDayCell);
+            });
+
+            let startDay = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
+
+            for (let i = 0; i < startDay; i++) {
+                const emptyCell = document.createElement("div");
+                emptyCell.classList.add("day", "empty");
+                calendarGrid.appendChild(emptyCell);
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayCell = document.createElement("div");
+                dayCell.classList.add("day");
+                dayCell.textContent = day;
+
+                const today = new Date();
+                if(
+                    day === today.getDate() &&
+                    month === today.getMonth() && 
+                    year === today.getFullYear()
+                ) {
+                    dayCell.classList.add("today");
+                }
+
+                dayCell.addEventListener("click", () => {
+                    alert(`День: ${day}.${month + 1}.${year}`);
+                });
+
+                calendarGrid.appendChild(dayCell);
+            }
+        }
+
+        document.getElementById("prevMonth").addEventListener("click", () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar(currentDate);
+        });
+
+        document.getElementById("nextMonth").addEventListener("click", () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar(currentDate);
+        });
+
+        renderCalendar(currentDate);
+    </script>
 
 </body>
 </html>

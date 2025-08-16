@@ -39,13 +39,38 @@
         <div class="section">
             <h3>Моё расписание</h3>
             <div class="schedule">
-                <div class="calendar">
-                    <div class="calendar-header">
-                        <button id="prevMonth">⟵</button>
-                        <span id="monthName"></span>
-                        <button id="nextMonth">⟶</button>
+                <div class="calendar-container">
+                    <!-- Календарь -->
+                    <div class="calendar">
+                        <div class="calendar-header">
+                            <button id="prevMonth">⟵</button>
+                            <span id="monthName"></span>
+                            <button id="nextMonth">⟶</button>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid"></div>
                     </div>
-                    <div class="calendar-grid" id="calendarGrid"></div>
+
+                    <!-- Панель дня -->
+                    <div class="day-panel" id="dayPanel">
+                        <h4 id="selectedDate">Дата</h4>
+                        <div class="day-editor">
+                            <label>Начало рабочего дня:</label>
+                            <input type="time" id="startTime">
+
+                            <label>Конец рабочего дня:</label>
+                            <input type="time" id="endTime">
+
+                            <label>Заметки:</label>
+                            <textarea id="notes" rows="3"></textarea>
+
+                            <button id="saveDay">Сохранить</button>
+                        </div>
+
+                        <div class="day-appointments">
+                            <h4>Текущие записи</h4>
+                            <ul id="appointmentsList"></ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -73,13 +98,13 @@
         ];
 
         let currentDate = new Date();
+        const appointments = {};
 
         function renderCalendar(date) {
             const month = date.getMonth();
             const year = date.getFullYear();
 
-            document.getElementById("monthName").textContent =
-                `${monthNames[month]} ${year}`;
+            document.getElementById("monthName").textContent = `${monthNames[month]} ${year}`;
 
             const firstDayOfMonth = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -87,7 +112,6 @@
             const calendarGrid = document.getElementById("calendarGrid");
             calendarGrid.innerHTML = "";
 
-            // Добавляем дни недели
             const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
             weekDays.forEach(day => {
                 const weekDayCell = document.createElement("div");
@@ -96,6 +120,7 @@
                 calendarGrid.appendChild(weekDayCell);
             });
 
+            // Сдвиг для первого дня месяца (понедельник = 0)
             let startDay = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
 
             for (let i = 0; i < startDay; i++) {
@@ -110,20 +135,57 @@
                 dayCell.textContent = day;
 
                 const today = new Date();
-                if(
+                if (
                     day === today.getDate() &&
-                    month === today.getMonth() && 
+                    month === today.getMonth() &&
                     year === today.getFullYear()
                 ) {
                     dayCell.classList.add("today");
                 }
 
                 dayCell.addEventListener("click", () => {
-                    alert(`День: ${day}.${month + 1}.${year}`);
+                    openDayPanel(day, month, year);
                 });
 
                 calendarGrid.appendChild(dayCell);
             }
+        }
+
+        function openDayPanel(day, month, year) {
+            const panel = document.getElementById("dayPanel");
+            panel.classList.add("active");
+
+            const selectedDate = document.getElementById("selectedDate");
+            selectedDate.textContent = `Расписание на ${day}.${month + 1}.${year}`;
+
+            const startInput = document.getElementById("startTime");
+            const endInput = document.getElementById("endTime");
+            const notesInput = document.getElementById("notes");
+            const appointmentsList = document.getElementById("appointmentsList");
+
+            const key = `${year}-${month + 1}-${day}`;
+            const data = appointments[key] || { start: "", end: "", notes: "", entries: [] };
+
+            startInput.value = data.start;
+            endInput.value = data.end;
+            notesInput.value = data.notes;
+
+            appointmentsList.innerHTML = "";
+            data.entries.forEach(entry => {
+                const li = document.createElement("li");
+                li.textContent = entry;
+                appointmentsList.appendChild(li);
+            });
+
+            document.getElementById("saveDay").onclick = () => {
+                appointments[key] = {
+                    start: startInput.value,
+                    end: endInput.value,
+                    notes: notesInput.value,
+                    entries: data.entries
+                };
+                alert("Сохранено!");
+            };
         }
 
         document.getElementById("prevMonth").addEventListener("click", () => {
@@ -136,6 +198,7 @@
             renderCalendar(currentDate);
         });
 
+        // Рендерим календарь при загрузке
         renderCalendar(currentDate);
     </script>
 

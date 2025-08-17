@@ -228,40 +228,44 @@ edit-buttons button {
     display: flex;
     gap: 20px;
     width: 100%;
-    align-items: stretch;
+    align-items: stretch; /* одинаковая высота */
 }
 
 /* Общие стили */
 .calendar,
 .day-panel {
-    flex: 1;
-    min-width: 0;
     background: #f9f9f9;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    flex-direction: column;
+    display: flex; /* чтобы контент растягивал блок */
 }
 
 /* Десктоп */
 @media (min-width: 768px) {
+    .calendar-container {
+        display: flex;
+        gap: 20px;
+        align-items: stretch;
+    }
+
     .calendar,
     .day-panel {
         flex: 1; /* пополам */
-        min-width: 0; /* чтобы делились ровно */
+        min-width: 0;
         max-width: 50%;
+        display: flex;
+        flex-direction: column;
     }
 
     .day-panel {
         display: none;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        max-width: 50%;
     }
 
-        .day-panel.active {
-            display: block;
-            opacity: 1;
-        }
+    .day-panel.active {
+        display: flex;
+    }
 }
 
 /* Мобильные */
@@ -274,17 +278,38 @@ edit-buttons button {
     .day-panel {
         width: 100% !important;
         max-width: 100% !important;
-        flex: none !important;
+        flex: none;
+        display: flex;
+        flex-direction: column;
     }
 
     .day-panel {
         display: none;
     }
 
-    .day-panel.active {
-        display: block;
-    }
+        .day-panel.active {
+            display: flex;
+        }
 }
+
+/* Постоянная чёрная рамка */
+.calendar-container .day-panel .day-editor input[type="time"],
+.calendar-container .day-panel .day-editor textarea {
+    border: 1px solid #000 !important;
+    border-radius: 4px;
+    background: #fff;
+    outline: none;
+    box-shadow: none !important; /* гасим голубое свечение Bootstrap/браузера */
+}
+
+    /* На фокусе — та же рамка, без свечения */
+    .calendar-container .day-panel .day-editor input[type="time"]:focus,
+    .calendar-container .day-panel .day-editor textarea:focus {
+        border: 1px solid #000 !important;
+        outline: none;
+        box-shadow: none !important;
+    }
+
 
 /* Заголовок календаря */
 .calendar-header {

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args); // builder web приложени€
 
-// Add services to the container
+// ƒобавление сервисов (DI контейнер)
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<EasyZapContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));

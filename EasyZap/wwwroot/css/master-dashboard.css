@@ -470,3 +470,8 @@ edit-buttons button {
     margin-bottom: 5px;
     font-size: 14px;
 }
+
+.calendar-day.has-workday {
+    background-color: #d1f0d1; /* светло-зелёный, можно поменять */
+    border-radius: 50%;
+}

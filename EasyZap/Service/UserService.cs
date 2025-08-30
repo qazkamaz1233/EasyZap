@@ -18,6 +18,8 @@ namespace EasyZap.Service
             _context = context;
         }
 
+        public EasyZapContext GetContext() => _context;
+
         public async Task<ApplicationUser?> GetByEmailAsync(string email) =>
             await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
 

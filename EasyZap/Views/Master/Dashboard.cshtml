@@ -11,7 +11,7 @@
 
     <div class="container">
         <div class="profile">
-            <img src="https://via.placeholder.com/120" alt="Фото мастера">
+            <img src="" alt="Фото мастера">
             <div class="profile-info">
                 <h2>Иван Иванов</h2>
                 <p>Барбер, 5 лет опыта</p>
@@ -91,117 +91,8 @@
         </div>
     </div>
 
-    <script>
-        const monthNames = [
-            "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
-            "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
-        ];
-
-        let currentDate = new Date();
-        const appointments = {};
-
-        function renderCalendar(date) {
-            const month = date.getMonth();
-            const year = date.getFullYear();
-
-            document.getElementById("monthName").textContent = `${monthNames[month]} ${year}`;
-
-            const firstDayOfMonth = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-            const calendarGrid = document.getElementById("calendarGrid");
-            calendarGrid.innerHTML = "";
-
-            const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
-            weekDays.forEach(day => {
-                const weekDayCell = document.createElement("div");
-                weekDayCell.classList.add("day-name");
-                weekDayCell.textContent = day;
-                calendarGrid.appendChild(weekDayCell);
-            });
-
-            // Сдвиг для первого дня месяца (понедельник = 0)
-            let startDay = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
-
-            for (let i = 0; i < startDay; i++) {
-                const emptyCell = document.createElement("div");
-                emptyCell.classList.add("day", "empty");
-                calendarGrid.appendChild(emptyCell);
-            }
-
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dayCell = document.createElement("div");
-                dayCell.classList.add("day");
-                dayCell.textContent = day;
-
-                const today = new Date();
-                if (
-                    day === today.getDate() &&
-                    month === today.getMonth() &&
-                    year === today.getFullYear()
-                ) {
-                    dayCell.classList.add("today");
-                }
-
-                dayCell.addEventListener("click", () => {
-                    openDayPanel(day, month, year);
-                });
-
-                calendarGrid.appendChild(dayCell);
-            }
-        }
-
-        function openDayPanel(day, month, year) {
-            console.log("Открываю редактор дня");
-            const panel = document.getElementById("dayPanel");
-            panel.classList.add("active");
-
-            const selectedDate = document.getElementById("selectedDate");
-            selectedDate.textContent = `Расписание на ${day}.${month + 1}.${year}`;
-
-            const startInput = document.getElementById("startTime");
-            const endInput = document.getElementById("endTime");
-            const notesInput = document.getElementById("notes");
-            const appointmentsList = document.getElementById("appointmentsList");
-
-            const key = `${year}-${month + 1}-${day}`;
-            const data = appointments[key] || { start: "", end: "", notes: "", entries: [] };
-
-            startInput.value = data.start;
-            endInput.value = data.end;
-            notesInput.value = data.notes;
-
-            appointmentsList.innerHTML = "";
-            data.entries.forEach(entry => {
-                const li = document.createElement("li");
-                li.textContent = entry;
-                appointmentsList.appendChild(li);
-            });
-
-            document.getElementById("saveDay").onclick = () => {
-                appointments[key] = {
-                    start: startInput.value,
-                    end: endInput.value,
-                    notes: notesInput.value,
-                    entries: data.entries
-                };
-                alert("Сохранено!");
-            };
-        }
-
-        document.getElementById("prevMonth").addEventListener("click", () => {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            renderCalendar(currentDate);
-        });
-
-        document.getElementById("nextMonth").addEventListener("click", () => {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            renderCalendar(currentDate);
-        });
-
-        // Рендерим календарь при загрузке
-        renderCalendar(currentDate);
-    </script>
-
+    @section Scripts{
+        <script src="/js/schedule.js"></script>
+    }
 </body>
 </html>

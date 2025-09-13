@@ -3,6 +3,7 @@ using System;
 using EasyZap.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EasyZap.Migrations
 {
     [DbContext(typeof(EasyZapContext))]
-    partial class EasyZapContextModelSnapshot : ModelSnapshot
+    [Migration("20250913184623_AddMasterLink")]
+    partial class AddMasterLink
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.7");
@@ -74,9 +77,6 @@ namespace EasyZap.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("MasterId");
-
-                    b.HasIndex("Token")
-                        .IsUnique();
 
                     b.ToTable("MasterLinks");
                 });

@@ -21,7 +21,12 @@
                     <div class="edit-buttons">
                         <button>Редактировать профиль</button>
                         <button>Записать</button>
-                        <button>Создать ссылку</button>
+
+                        <button id="generateLinkBtn">Сгенерировать ссылку</button>
+                        <div id="linkResult"></div>
+
+                        @* Скрытый токен для CSRF *@
+                        <input type="hidden" name="__RequestVerificationToken" value="@@Antiforgery.GetAndStoreTokens(HttpContext).RequestToken" />
                     </div>
 
                     @if (User.Identity?.IsAuthenticated ?? false)
@@ -93,6 +98,7 @@
 
     @section Scripts{
         <script src="/js/schedule.js"></script>
+        <script src="/js/link-generator.js"></script>
     }
 </body>
 </html>

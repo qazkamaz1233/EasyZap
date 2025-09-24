@@ -25,8 +25,6 @@ builder.Services.AddAuthorization();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<UserService>();
 
-builder.Services.AddScoped<LinkService>();
-
 var app = builder.Build(); // web приложение
 
 // Middleware pipeline

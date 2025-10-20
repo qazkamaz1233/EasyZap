@@ -46,41 +46,6 @@ namespace EasyZap.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("EasyZap.Models.MasterLink", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Clicks")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("ExpiresAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("MasterId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MasterId");
-
-                    b.HasIndex("Token")
-                        .IsUnique();
-
-                    b.ToTable("MasterLinks");
-                });
-
             modelBuilder.Entity("EasyZap.Models.WorkDay", b =>
                 {
                     b.Property<int>("Id")
@@ -107,17 +72,6 @@ namespace EasyZap.Migrations
                     b.HasIndex("MasterId");
 
                     b.ToTable("WorkDays");
-                });
-
-            modelBuilder.Entity("EasyZap.Models.MasterLink", b =>
-                {
-                    b.HasOne("EasyZap.Models.ApplicationUser", "Master")
-                        .WithMany()
-                        .HasForeignKey("MasterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Master");
                 });
 
             modelBuilder.Entity("EasyZap.Models.WorkDay", b =>

@@ -19,7 +19,7 @@ namespace EasyZap.Controllers
 
             var user = await _userService.GetByIdAsync(userId.Value);
 
-            if(user == null || user.Role != Models.UserRole.Master)
+            if(user == null || user.Role != DataAccess.UserModel.UserRole.Master)
                 return Unauthorized();
 
             return View(user);

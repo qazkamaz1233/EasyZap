@@ -1,5 +1,5 @@
-﻿using EasyZap.Models;
-using EasyZap.ViewModels;
+﻿using DataAccess.UserModel;
+using DataAccess.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;

@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
-using EasyZap.Data;
-using EasyZap.Models;
+using DataAccess;
+using DataAccess.UserModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EasyZap.ViewModels
+namespace DataAccess.ViewModel
 {
     public class LoginViewModel
     {

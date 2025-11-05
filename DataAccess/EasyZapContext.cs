@@ -1,7 +1,8 @@
-﻿using EasyZap.Models;
+﻿using DataAccess.UserModel;
+using DataAccess.EntityModel;
 using Microsoft.EntityFrameworkCore;
 
-namespace EasyZap.Data
+namespace DataAccess
 {
     // для миграций
     public class EasyZapContext : DbContext

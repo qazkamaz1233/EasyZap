@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using EasyZap.Models;
-using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using DataAccess.UserModel;
 
-namespace EasyZap.ViewModels
+namespace DataAccess.ViewModel
 {
     public class RegisterViewModel
     {

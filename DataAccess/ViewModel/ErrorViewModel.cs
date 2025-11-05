@@ -1,4 +1,4 @@
-namespace EasyZap.Models
+namespace DataAccess.ViewModel
 {
     public class ErrorViewModel
     {

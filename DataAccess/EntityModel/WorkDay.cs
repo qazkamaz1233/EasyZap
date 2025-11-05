@@ -1,4 +1,6 @@
-﻿namespace EasyZap.Models
+﻿using DataAccess.UserModel;
+
+namespace DataAccess.EntityModel
 {
     public class WorkDay
     {

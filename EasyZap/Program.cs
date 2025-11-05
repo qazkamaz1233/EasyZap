@@ -1,5 +1,5 @@
-using EasyZap.Data;
-using EasyZap.Models;
+using DataAccess;
+using DataAccess.UserModel;
 using EasyZap.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;

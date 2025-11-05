@@ -1,5 +1,5 @@
-﻿using EasyZap.Data;
-using EasyZap.Models;
+﻿using DataAccess;
+using DataAccess.EntityModel;
 using EasyZap.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

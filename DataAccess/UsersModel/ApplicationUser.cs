@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
-namespace EasyZap.Models
+namespace DataAccess.UserModel
 {
     public enum UserRole
     {

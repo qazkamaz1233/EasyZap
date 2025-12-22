@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using DataAccess.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace EasyZap.Controllers
 {

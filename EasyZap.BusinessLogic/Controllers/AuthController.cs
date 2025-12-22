@@ -88,7 +88,7 @@ namespace EasyZap.Controllers
                 return View(model);
             }
 
-            await _userService.SignInAsync(user, HttpContext);
+            await _userService.SignInAsync(user, HttpContext );
 
             return RedirectByRole(user.Role);
         }
